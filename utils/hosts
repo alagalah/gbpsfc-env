@@ -1,0 +1,12 @@
+127.0.0.1	localhost
+192.168.50.70	sfc1
+192.168.50.71	sfc2
+192.168.50.72	sfc3
+192.168.50.73   sfc4
+192.168.50.74   sfc5
+192.168.50.75   sfc6
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
