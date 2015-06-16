@@ -5,7 +5,7 @@ set -e
 ODL=$1
 
 for i in `seq 1 $NUM_NODES`; do
-  hostname="sfc"$i
+  hostname="gbpsfc"$i
   switchname="sw"$i
   echo $hostname
 #  vagrant ssh $hostname -c "sudo /vagrant/clean.sh"

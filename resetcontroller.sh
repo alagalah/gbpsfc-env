@@ -1,4 +1,4 @@
-hostnum=${HOSTNAME#"sfc"}
+hostnum=${HOSTNAME#"gbpsfc"}
 sw="sw$hostnum"
 echo "Deleting controller for $sw"
 ovs-vsctl del-controller $sw;

@@ -113,26 +113,38 @@ def launch(switches, hosts, contIP='127.0.0.1'):
 if __name__ == "__main__" :
 #    print "Cleaning environment..."
 #    doCmd('/vagrant/clean.sh') 
-    sw_index=int(socket.gethostname().split("sfc",1)[1])-1
+    sw_index=int(socket.gethostname().split("gbpsfc",1)[1])-1
     if sw_index in range(0,len(switches)+1):   
        
-       controller=os.environ['ODL'] 
+       controller=os.environ.get('ODL') 
        sw_type = switches[sw_index]['type']
        sw_name = switches[sw_index]['name']
-       if sw_type == 'gbp': 
+       if sw_type == 'gbp':
+	 print "*****************************" 
 	 print "Configuring %s as a GBP node." % sw_name
+	 print "*****************************"
+	 print 
          launch([switches[sw_index]],hosts,controller)
+	 print "*****************************"
          print "OVS status:"
          print "-----------"
+	 print
          doCmd('ovs-vsctl show')
+	 print
          print "Docker containers:"
          print "------------------"
          doCmd('docker ps')
+         print "*****************************"
        elif sw_type == 'sff':
+         print "*****************************"
          print "Configuring %s as an SFF." % sw_name
+         print "*****************************"
          doCmd('sudo ovs-vsctl set-manager tcp:%s:6640' % controller)
+	 print
        elif sw_type == 'sf':
-         print "To configure %s as an SF, run sf-config.sh locally." % sw_name
-         #doCmd('sudo /vagrant/sf-config.sh')
+         print "*****************************"
+  	 print "Configuring %s as an SF, running /home/vagrant/sf-config.sh locally." % sw_name
+         print "*****************************"
+ 	 doCmd('sudo /home/vagrant/sf-config.sh')
          #addGpeTunnel(switches[sw_index]['name'])
 

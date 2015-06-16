@@ -3,7 +3,7 @@
 set -e
 
 for i in `seq 1 $NUM_NODES`; do
-  hostname="sfc"$i
+  hostname="gbpsfc"$i
   echo $hostname
   vagrant ssh $hostname -c "sudo cp /vagrant/utils/hosts /etc/hosts"
 done

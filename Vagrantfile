@@ -37,21 +37,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   SHELL
 
   num_nodes = (ENV['NUM_NODES'] || 1).to_i
-  config.proxy.http	= 'http://proxy.esl.cisco.com:80/'
-  config.proxy.https	= 'https://proxy.esl.cisco.com:80/'
 
   # ip configuration
   ip_base = (ENV['SUBNET'] || "192.168.50.")
   ips = num_nodes.times.collect { |n| ip_base + "#{n+70}" }
 
   num_nodes.times do |n|
-    config.vm.define "sfc#{n+1}", autostart: true do |compute|
+    config.vm.define "gbpsfc#{n+1}", autostart: true do |compute|
       vm_ip = ips[n]
-      config.proxy.no_proxy = 'localhost,127.0.0.1,192.168.50.80,192.168.50.30,192.168.50.1,172.28.184.69,192.168.50.10,.noiro.lab'
       vm_index = n+1
       compute.vm.box = "trusty64"
       compute.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box"
-      compute.vm.hostname = "sfc#{vm_index}"
+      compute.vm.hostname = "gbpsfc#{vm_index}"
       compute.vm.network "private_network", ip: "#{vm_ip}"
       compute.vm.provider :virtualbox do |vb|
         vb.memory = 1024
