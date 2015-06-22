@@ -78,7 +78,7 @@ while true; do curl 10.0.36.2; done
 ```
 Ctrl-P-Q
 ```
-ovs-dpctl show
+ovs-dpctl dump-flows
 ```
 
 Repeat for each of gbpsfc2, gbpsfc3.
@@ -128,13 +128,13 @@ while true; do curl 10.0.36.2; done
 
 Ctrl-P-Q
 
-`ovs-dpctl show`
+`ovs-dpctl dump-flows`
  
 Repeat for gbpsfc6
 
 Connect to other nodes and trace flows:
 
-`ovs-dpctl show`
+`ovs-dpctl dump-flows`
 
 When finished from host folder where Vagrantfile located do:
 
