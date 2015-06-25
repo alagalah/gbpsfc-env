@@ -49,6 +49,8 @@ vagrant up
 
 ##demo-gbp1
 
+###Setup
+
 VMs:
 * gbpsfc1: gbp
 * gbpsfc2: gbp
@@ -61,27 +63,69 @@ Containers:
 To run, from host folder where Vagrantfile located do:
 
 ` ./startdemo.sh demo-gbp1`
+
+After this, `infrastructure_config.py` will be copied from `/demo-gbp1`, and you are ready to start testing.
  
-To test:
-```
+###To test:
+
+SSH to test VM (may take some seconds):
+```bash
 vagrant ssh gbpsfc1
+```
+
+Get root rights:
+```bash
 sudo -E bash
+```
+
+Check docker containers running on your VM:
+```bash
 docker ps
-docker attach h36_{x}
+```
+
+Notice there are containers from two different endpoint groups, "h35" and "h36".
+Enter into the shell on one of "h36" (web) container (on `gbpsfc1` it will be `h36_4`, its IP is `10.0.36.4`, 
+you will need it later)
+```bash
+docker attach h36_4
+```
+
+Start a HTTP server:
+```bash
 python -m SimpleHTTPServer 80
 ```
-Ctrl-P-Q
+
+Press `Ctrl-P-Q` to return to your root shell on `gbpsfc1`
+
+Enter into one of "h35" (client) container, 
+ping the container where HTTP server runs, 
+and connect to index page:
+
+*We use eternal loop here to imitate web activity. 
+After finishing your test, you might want to stop the loop with `Ctrl-C`*
 ```
 docker attach h35_{x}
-ping 10.0.36.2
-while true; do curl 10.0.36.2; done
+ping 10.0.36.4
+while true; do curl 10.0.36.4; done
 ```
-Ctrl-P-Q
+
+You may `ping` and `curl` to the web-server from any test VM.
+
+`Ctrl-P-Q` to leave back to root shell on VM.
+
+Now watch the packets flow:
 ```
 ovs-dpctl dump-flows
 ```
 
-Repeat for each of gbpsfc2, gbpsfc3.
+Leave to main shell:
+```bash
+exit #leave root shell
+exit #close ssh session
+```
+Repeat `vagrant ssh` etc. for each of gbpsfc2, gbpsfc3.
+
+###After testing
 
 When finished from host folder where Vagrantfile located do:
 
