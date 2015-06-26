@@ -85,7 +85,8 @@ docker ps
 
 Notice there are containers from two different endpoint groups, "h35" and "h36".
 Enter into the shell on one of "h36" (web) container (on `gbpsfc1` it will be `h36_4`, its IP is `10.0.36.4`, 
-you will need it later)
+you will need it later).
+*(You need double <ENTER> after `docker attach`)*
 ```bash
 docker attach h36_4
 ```
@@ -154,7 +155,8 @@ To run, from host folder where Vagrantfile located do:
 For now, go through each POSTMAN entry in the folder for the demo. This will be ported.
 
 To test:
-```
+*(don't) forget double <ENTER> after `docker attach`*
+```bash
 vagrant ssh gbpsfc1
 sudo -E bash
 docker ps
@@ -164,7 +166,7 @@ python -m SimpleHTTPServer 80
 
 Ctrl-P-Q
 
-```
+```bash
 docker attach h35_2
 ping 10.0.36.2
 while true; do curl 10.0.36.2; done
