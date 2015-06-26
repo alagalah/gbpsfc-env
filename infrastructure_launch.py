@@ -143,8 +143,8 @@ if __name__ == "__main__" :
 	 print
        elif sw_type == 'sf':
          print "*****************************"
-  	 print "Configuring %s as an SF, running /home/vagrant/sf-config.sh locally." % sw_name
+  	 print "Configuring %s as an SF, running /vagrant/utils/sf-config.sh locally." % sw_name
          print "*****************************"
- 	 doCmd('sudo /home/vagrant/sf-config.sh')
+ 	 doCmd('sudo /vagrant/utils/sf-config.sh')
          #addGpeTunnel(switches[sw_index]['name'])
 
