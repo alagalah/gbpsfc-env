@@ -86,7 +86,7 @@ docker ps
 Notice there are containers from two different endpoint groups, "h35" and "h36".
 Enter into the shell on one of "h36" (web) container (on `gbpsfc1` it will be `h36_4`, its IP is `10.0.36.4`, 
 you will need it later).
-*(You need double <ENTER> after `docker attach`)*
+*(You need double ENTER after `docker attach`)*
 ```bash
 docker attach h36_4
 ```
@@ -155,7 +155,7 @@ To run, from host folder where Vagrantfile located do:
 For now, go through each POSTMAN entry in the folder for the demo. This will be ported.
 
 To test:
-*(don't) forget double <ENTER> after `docker attach`*
+*(don't) forget double ENTER after `docker attach`*
 ```bash
 vagrant ssh gbpsfc1
 sudo -E bash
