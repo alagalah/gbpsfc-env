@@ -1,18 +1,10 @@
-#DISCLAIMER
-
-NOTE: This is a work-in-progress, but there was enough demand that folks weren't willing to wait for a polished version in a week's time.
-
-The REST portions of the SFC demo's have not been ported yet. For that you will have to use POSTMAN: https://www.getpostman.com/collections/8426b2080f8ef6472eb3
-
-All demos are provided as is, until this disclaimer is removed
-
 #SETUP
 
 This is a demonstration/development environment for show-casing OpenDaylight GroupBasedPolicy (GBP) with ServiceFunctionChaining (SFC)
 
-Note: requirements will become more flexible as the environment is improved
+The initial instalation may take some time, with vagrant and docker image downloads. 
 
-The first time installing may take some time, with vagrant and docker image downloads. After the first time it is very quick.
+After the first time it is very quick.
 
 1. Set up Vagrant. 
   * Edit env.sh for NUM_NODES. (Keep all other vars the same for this version)
@@ -25,10 +17,10 @@ The first time installing may take some time, with vagrant and docker image down
 source ./env.sh
 vagrant up
 ```
-  * This takes a while. Could be an hour?
+  * This takes quite some time initially. 
 
 3. Start controller.
-  * Currently it is expected that that controller runs on the host, hosting the VMs. This will change.
+  * Currently it is expected that that controller runs on the host, hosting the VMs.
   * Tested using groupbasedpolicy stable/lithium.
   * Start controller and install following features:
 
@@ -134,7 +126,7 @@ When finished from host folder where Vagrantfile located do:
 
 If you like `vagrant destroy` will remove all VMs.
 
-#demo-symmetric-chain / demo-asymmetric-chain
+##demo-symmetric-chain / demo-asymmetric-chain
 
 VMs:
 * gbpsfc1: gbp
@@ -145,8 +137,8 @@ VMs:
 * gbpsfc6: gbp
 
 Containers:
-* h35_{x} are in EPG:client
-* h36_{x} are in EPG:web
+* h35_2 is in EPG:client on gbpsfc1
+* h36_4 is in EPG:web on gbpsfc6
 
 To run, from host folder where Vagrantfile located do:
 
@@ -154,13 +146,13 @@ To run, from host folder where Vagrantfile located do:
 
 For now, go through each POSTMAN entry in the folder for the demo. This will be ported.
 
-To test:
+### To test:
 *(don't) forget double ENTER after `docker attach`*
 ```bash
-vagrant ssh gbpsfc1
+vagrant ssh gbpsfc6
 sudo -E bash
 docker ps
-docker attach h36_2
+docker attach h36_4
 python -m SimpleHTTPServer 80
 ```
 
@@ -168,21 +160,15 @@ Ctrl-P-Q
 
 ```bash
 docker attach h35_2
-ping 10.0.36.2
-while true; do curl 10.0.36.2; done
+ping 10.0.36.4
+while true; do curl 10.0.36.4; done
 ```
 
 Ctrl-P-Q
 
 `ovs-dpctl dump-flows`
- 
-Repeat for gbpsfc6
 
-Connect to other nodes and trace flows:
-
-`ovs-dpctl dump-flows`
-
-When finished from host folder where Vagrantfile located do:
+### When finished from host folder where Vagrantfile located do:
 
 `./cleandemo.sh`
 

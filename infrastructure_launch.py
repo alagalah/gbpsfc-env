@@ -84,13 +84,13 @@ def connectContainerToSwitch(sw,host,containerID,of_port):
 def doCmd(cmd):
     listcmd=cmd.split()
     print check_output(listcmd)
-    
+
 def launch(switches, hosts, contIP='127.0.0.1'):
 
     for sw in switches:
-	addManager(contIP)
-	ports=0        
-        first_host=True	
+        addManager(contIP)
+        ports=0
+        first_host=True
         for host in hosts:
             if host['switch'] == sw['name']:
                 if first_host:
@@ -100,51 +100,51 @@ def launch(switches, hosts, contIP='127.0.0.1'):
                     addController(sw['name'], contIP)
                     addGpeTunnel(sw['name'])
                     addTunnel(sw['name'])
-		    first_host=False
+                first_host=False
                 containerImage=defaultContainerImage #from Config
                 if host.has_key('container_image'): #from Config
                     containerImage=host['container_image']
                 containerID=launchContainer(host,containerImage)
-		ports+=1
-		connectContainerToSwitch(sw['name'],host,containerID,str(ports))
-		host['port-name']='vethl-'+host['name']
-		print "Created container: %s with IP: %s. Connect using 'docker attach %s', disconnect with ctrl-p-q." % (host['name'],host['ip'],host['name'])
+                ports+=1
+                connectContainerToSwitch(sw['name'],host,containerID,str(ports))
+                host['port-name']='vethl-'+host['name']
+                print "Created container: %s with IP: %s. Connect using 'docker attach %s', disconnect with ctrl-p-q." % (host['name'],host['ip'],host['name'])
 
 if __name__ == "__main__" :
 #    print "Cleaning environment..."
-#    doCmd('/vagrant/clean.sh') 
+#    doCmd('/vagrant/clean.sh')
     sw_index=int(socket.gethostname().split("gbpsfc",1)[1])-1
-    if sw_index in range(0,len(switches)+1):   
-       
-       controller=os.environ.get('ODL') 
+    if sw_index in range(0,len(switches)+1):
+
+       controller=os.environ.get('ODL')
        sw_type = switches[sw_index]['type']
        sw_name = switches[sw_index]['name']
        if sw_type == 'gbp':
-	 print "*****************************" 
-	 print "Configuring %s as a GBP node." % sw_name
-	 print "*****************************"
-	 print 
-         launch([switches[sw_index]],hosts,controller)
-	 print "*****************************"
-         print "OVS status:"
-         print "-----------"
-	 print
-         doCmd('ovs-vsctl show')
-	 print
-         print "Docker containers:"
-         print "------------------"
-         doCmd('docker ps')
-         print "*****************************"
+           print "*****************************"
+           print "Configuring %s as a GBP node." % sw_name
+           print "*****************************"
+           print
+           launch([switches[sw_index]],hosts,controller)
+           print "*****************************"
+           print "OVS status:"
+           print "-----------"
+           print
+           doCmd('ovs-vsctl show')
+           print
+           print "Docker containers:"
+           print "------------------"
+           doCmd('docker ps')
+           print "*****************************"
        elif sw_type == 'sff':
-         print "*****************************"
-         print "Configuring %s as an SFF." % sw_name
-         print "*****************************"
-         doCmd('sudo ovs-vsctl set-manager tcp:%s:6640' % controller)
-	 print
+           print "*****************************"
+           print "Configuring %s as an SFF." % sw_name
+           print "*****************************"
+           doCmd('sudo ovs-vsctl set-manager tcp:%s:6640' % controller)
+           print
        elif sw_type == 'sf':
-         print "*****************************"
-  	 print "Configuring %s as an SF, running /home/vagrant/sf-config.sh locally." % sw_name
-         print "*****************************"
- 	 doCmd('sudo /home/vagrant/sf-config.sh')
-         #addGpeTunnel(switches[sw_index]['name'])
+           print "*****************************"
+           print "Configuring %s as an SF." % sw_name
+           print "*****************************"
+           doCmd('sudo /vagrant/sf-config.sh')
+           #addGpeTunnel(switches[sw_index]['name'])
 
