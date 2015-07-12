@@ -33,10 +33,10 @@ vagrant up
   * 8 docker containers in 2 x EPGs (web, client)
   * contract with ICMP and HTTP
 * demo-symmetry:
-  * 8 docker containers in 2 x EPGs (web, client)
+  * 2 docker containers in 2 x EPGs (web, client)
   * contract with ICMP (ALLOW) and HTTP (CHAIN, where Client request is chained, Web reverse path is reverse path of chain)
 * demo-asymmetry:
-  * 8 docker containers in 2 x EPGs (web, client)
+  * 2 docker containers in 2 x EPGs (web, client)
   * contract with ICMP (ALLOW) and HTTP (CHAIN, where Client request is chained, Web reverse path is ALLOW)
 
 ##demo-gbp1
