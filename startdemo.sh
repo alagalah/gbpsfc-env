@@ -2,7 +2,9 @@
 
 set -e
 
-demo=$1
+demo=${1%/}
+
+echo $demo
 
 cp $demo/infrastructure_config.py .
 

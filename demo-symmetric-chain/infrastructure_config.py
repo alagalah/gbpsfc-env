@@ -24,7 +24,7 @@ switches = [
             {'name': 'sw8',
              'type': 'none',
              'dpid': '8'}
-      ]
+	    ]
 
 defaultContainerImage='alagalah/odlpoc_ovs230'
 

@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ln -sf /usr/bin/docker.io /usr/local/bin/docker
     sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
     update-rc.d docker.io defaults
-    sudo docker pull ubuntu:14.04
+    sudo docker pull alagalah/odlpoc_ovs230 
     apt-get install -y curl > /dev/null
     apt-get install -y python-pip
     pip install ipaddr

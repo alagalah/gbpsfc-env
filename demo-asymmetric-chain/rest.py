@@ -587,6 +587,8 @@ if __name__ == "__main__":
     controller=os.environ.get('ODL')
     if controller == None:
         sys.exit("No controller set.")
+    else:
+	print "Contacting controller at %s" % controller
 
     tenants=get(controller,DEFAULT_PORT,CONF_TENANT)
 
