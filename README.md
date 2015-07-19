@@ -22,11 +22,17 @@ vagrant up
 3. Start controller.
   * Currently it is expected that that controller runs on the host hosting the VMs.
   * Tested using groupbasedpolicy stable/lithium.
-  * Start controller and install following features in karaf:
+  * Start controller by running bin/karaf and install following features in karaf:
 
 ```
  feature:install odl-groupbasedpolicy-ofoverlay odl-groupbasedpolicy-ui odl-restconf
 ```
+
+  * Run log:tail and wait until the following message appears in the log:
+```
+INFO - OFOverlayRenderer - org.opendaylight.groupbasedpolicy.ofoverlay-renderer - Initialized OFOverlay renderer
+```
+  * Now you can ^C the log:tail if you wish
 
 #Demos:
 * demo-gbp1: 
