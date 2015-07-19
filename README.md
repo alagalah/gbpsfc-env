@@ -174,8 +174,8 @@ Ctrl-P-Q to detach from docker, leaving the client making HTTP requests, and log
 
 
 Look around: use "vagrant ssh" to the various machines 
-*take packet captures on eth1.
-*sudo ovs-dpctl dump-flows`
+ * take packet captures on eth1.
+ * sudo ovs-dpctl dump-flows`
 
 ### When finished from host folder where Vagrantfile located do:
 
