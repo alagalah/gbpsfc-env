@@ -28,7 +28,7 @@ vagrant up
  feature:install odl-groupbasedpolicy-ofoverlay odl-groupbasedpolicy-ui odl-restconf
 ```
 
-  * Run log:tail and wait until the following message appears in the log:
+  * Run `log:tail | grep renderer` and wait until the following message appears in the log:
 ```
 INFO - OFOverlayRenderer - org.opendaylight.groupbasedpolicy.ofoverlay-renderer - Initialized OFOverlay renderer
 ```
@@ -188,4 +188,12 @@ Look around: use "vagrant ssh" to the various machines
 `./cleandemo.sh`
 
 If you like `vagrant destroy` will remove all VMs
+
+##Preparing to run another demo
+1. In the vagrant directory, run cleandemo.sh
+2. stop controller (logout of karaf)
+3. Remove journal and snapshot directories from controller directory.
+4. Restart the controller, install features, wait, as above.
+
+
 
