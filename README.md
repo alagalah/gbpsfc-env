@@ -20,13 +20,19 @@ vagrant up
   * This takes quite some time initially. 
 
 3. Start controller.
-  * Currently it is expected that that controller runs on the host, hosting the VMs.
+  * Currently it is expected that that controller runs on the host hosting the VMs.
   * Tested using groupbasedpolicy stable/lithium.
-  * Start controller and install following features:
+  * Start controller by running bin/karaf and install following features in karaf:
 
 ```
  feature:install odl-groupbasedpolicy-ofoverlay odl-groupbasedpolicy-ui odl-restconf
 ```
+
+  * Run log:tail and wait until the following message appears in the log:
+```
+INFO - OFOverlayRenderer - org.opendaylight.groupbasedpolicy.ofoverlay-renderer - Initialized OFOverlay renderer
+```
+  * Now you can ^C the log:tail if you wish
 
 #Demos:
 * demo-gbp1: 
@@ -129,12 +135,12 @@ If you like `vagrant destroy` will remove all VMs.
 ##demo-symmetric-chain / demo-asymmetric-chain
 
 VMs:
-* gbpsfc1: gbp
+* gbpsfc1: gbp (client initiates transactions from here)
 * gbpsfc2: sff
 * gbpsfc3: "sf"
 * gbpsfc4: sff
 * gbpsfc5: "sf"
-* gbpsfc6: gbp
+* gbpsfc6: gbp (run a server here)
 
 Containers:
 * h35_2 is in EPG:client on gbpsfc1
@@ -146,30 +152,40 @@ To run, from host folder where Vagrantfile located do:
 
 For now, go through each POSTMAN entry in the folder for the demo. This will be ported.
 
-### To test:
+### To test by sending traffic:
+Start a test HTTP server on h36_4 in VM 6.
+
 *(don't) forget double ENTER after `docker attach`*
 ```bash
 vagrant ssh gbpsfc6
-sudo -E bash
-docker ps
-docker attach h36_4
+sudo -E docker ps
+sudo -E docker attach h36_4
 python -m SimpleHTTPServer 80
 ```
 
-Ctrl-P-Q
+Ctrl-P-Q to detach from docker without stopping the SimpleHTTPServer, and logoff gbpsfc6.
+
+Now start client traffic, either ping or make HTTP requests to the server on h36_4.
 
 ```bash
-docker attach h35_2
+vagrant ssh gbpsfc1
+sudo -E docker ps
+sudo -E docker attach h35_2
 ping 10.0.36.4
-while true; do curl 10.0.36.4; done
+curl 10.0.36.4
+while true; do curl 10.0.36.4; sleep 1; done
 ```
 
-Ctrl-P-Q
+Ctrl-P-Q to detach from docker, leaving the client making HTTP requests, and logoff gbpsfc1.
 
-`ovs-dpctl dump-flows`
+
+Look around: use "vagrant ssh" to the various machines 
+ * take packet captures on eth1.
+ * sudo ovs-dpctl dump-flows`
 
 ### When finished from host folder where Vagrantfile located do:
 
 `./cleandemo.sh`
 
 If you like `vagrant destroy` will remove all VMs
+
