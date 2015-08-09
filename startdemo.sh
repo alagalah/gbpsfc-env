@@ -6,6 +6,12 @@ demo=${1%/}
 
 echo $demo
 
+if [ -f "demo.lock" ]; then
+    echo "There is already a demo running:"
+    cat demo.lock
+    exit
+fi
+
 cp $demo/infrastructure_config.py .
 
 if [ -f $demo/sf-config.sh ]; then
@@ -25,4 +31,6 @@ done
 
 echo "Configuring controller..."
 ./$demo/rest.py
+
+echo "$demo" > demo.lock
 

@@ -53,13 +53,13 @@ def post(host, port, uri, data, debug=False):
     if debug == True:
         print r.text
     r.raise_for_status()
-    
 
-    
-    
+
+
+
 def get_service_functions_uri():
     return "/restconf/config/service-function:service-functions"
-    
+
 def get_service_functions_data():
     return {
     "service-functions": {
@@ -226,8 +226,8 @@ def get_service_function_paths_data():
                 "symmetric": "true"
 
             }
-        ] 
-    } 
+        ]
+    }
 }
 
 def get_tenant_data():
@@ -379,7 +379,7 @@ def get_tenant_data():
                       }
                     ]
                   }
-                  
+
                 ]
               },
               {
@@ -434,17 +434,17 @@ def get_tenant_data():
 }
 
 # Main definition - constants
- 
+
 # =======================
 #     MENUS FUNCTIONS
 # =======================
- 
+
 # Main menu
 
 # =======================
 #      MAIN PROGRAM
 # =======================
- 
+
 # Main Program
 
 def get_tenant_uri():
@@ -491,90 +491,167 @@ def get_tunnel_data():
     ]
   }
 }
-    
+
 def get_tunnel_uri():
     return "/restconf/config/opendaylight-inventory:nodes"
 
 def get_endpoint_data():
-    return [{
-    "input": {
+    return [
+{
+"input": {
 
-        "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd", 
+    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
 
-        "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
 
-        "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1", 
-        "mac-address": "00:00:00:00:35:02", 
+    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "mac-address": "00:00:00:00:36:02",
 
-        "l3-address": [
-            {
-                "ip-address": "10.0.35.2", 
-                "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
-            }
-        ], 
-        "port-name": "vethl-h35_2", 
-        "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
-    }
+    "l3-address": [
+        {
+            "ip-address": "10.0.36.2",
+            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        }
+    ],
+    "port-name": "vethl-h36_2",
+    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
 },
 {
-    "input": {
-
-        "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5", 
-
-        "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
-
-        "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1", 
-        "mac-address": "00:00:00:00:36:02", 
-
-        "l3-address": [
-            {
-                "ip-address": "10.0.36.2", 
-                "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
-            }
-        ], 
-        "port-name": "vethl-h36_2", 
-        "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+"input": {
+    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
+"network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+"l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+"mac-address": "00:00:00:00:35:02",
+"l3-address": [
+    {
+        "ip-address": "10.0.35.2",
+        "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
     }
+],
+"port-name": "vethl-h35_2",
+"tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
 },
 {
-    "input": {
+"input": {
 
-        "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd", 
+    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
 
-        "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+    "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
 
-        "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1", 
-        "mac-address": "00:00:00:00:35:04", 
+    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "mac-address": "00:00:00:00:35:03",
 
-        "l3-address": [
-            {
-                "ip-address": "10.0.35.4", 
-                "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
-            }
-        ], 
-        "port-name": "vethl-h35_4", 
-        "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
-    }
+    "l3-address": [
+        {
+            "ip-address": "10.0.35.3",
+            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        }
+    ],
+    "port-name": "vethl-h35_3",
+    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
 },
 {
-    "input": {
+"input": {
 
-        "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5", 
+    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
 
-        "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
 
-        "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1", 
-        "mac-address": "00:00:00:00:36:04", 
+    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "mac-address": "00:00:00:00:36:03",
 
-        "l3-address": [
-            {
-                "ip-address": "10.0.36.4", 
-                "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
-            }
-        ], 
-        "port-name": "vethl-h36_4", 
-        "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
-    }
+    "l3-address": [
+        {
+            "ip-address": "10.0.36.3",
+            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        }
+    ],
+    "port-name": "vethl-h36_3",
+    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
+},
+{
+"input": {
+
+    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
+
+    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+
+    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "mac-address": "00:00:00:00:36:04",
+
+    "l3-address": [
+        {
+            "ip-address": "10.0.36.4",
+            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        }
+    ],
+    "port-name": "vethl-h36_4",
+    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
+},
+{
+"input": {
+
+    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
+
+    "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+
+    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "mac-address": "00:00:00:00:35:04",
+
+    "l3-address": [
+        {
+            "ip-address": "10.0.35.4",
+            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        }
+    ],
+    "port-name": "vethl-h35_4",
+    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
+},
+{
+"input": {
+
+    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
+
+    "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+
+    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "mac-address": "00:00:00:00:35:05",
+
+    "l3-address": [
+        {
+            "ip-address": "10.0.35.5",
+            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        }
+    ],
+    "port-name": "vethl-h35_5",
+    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
+},
+{
+"input": {
+
+    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
+
+    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+
+    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "mac-address": "00:00:00:00:36:05",
+
+    "l3-address": [
+        {
+            "ip-address": "10.0.36.5",
+            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        }
+    ],
+    "port-name": "vethl-h36_5",
+    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+}
 }]
 
 def get_endpoint_uri():
