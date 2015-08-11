@@ -12,6 +12,8 @@ for i in `seq 1 $NUM_NODES`; do
 
 done
  
+./rest-clean.py
+
 if [ -f "demo.lock" ] ; then
   rm demo.lock
 fi
