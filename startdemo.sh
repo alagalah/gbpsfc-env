@@ -32,5 +32,11 @@ done
 echo "Configuring controller..."
 ./$demo/rest.py
 
+echo "Post-controller configuration..."
+for i in `seq 1 $NUM_NODES`; do
+  hostname="gbpsfc"$i
+  echo $hostname
+  vagrant ssh $hostname -c "sudo -E /vagrant/get-nsps.py"
+done
 echo "$demo" > demo.lock
 

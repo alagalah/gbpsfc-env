@@ -2,8 +2,6 @@
 
 set -e
 
-ODL=$1
-
 for i in `seq 1 $NUM_NODES`; do
   hostname="gbpsfc"$i
   switchname="sw"$i
@@ -12,6 +10,8 @@ for i in `seq 1 $NUM_NODES`; do
 
 done
  
+./rest-clean.py
+
 if [ -f "demo.lock" ] ; then
   rm demo.lock
 fi
