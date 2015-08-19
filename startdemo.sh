@@ -36,6 +36,7 @@ echo "Post-controller configuration..."
 for i in `seq 1 $NUM_NODES`; do
   hostname="gbpsfc"$i
   echo $hostname
+  cp $demo/get-nsps.py .
   vagrant ssh $hostname -c "sudo -E /vagrant/get-nsps.py"
 done
 echo "$demo" > demo.lock
