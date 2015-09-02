@@ -1,10 +1,9 @@
 #SETUP
 
-This is a demonstration/development environment for show-casing OpenDaylight GroupBasedPolicy (GBP) with ServiceFunctionChaining (SFC)
-
-The initial instalation may take some time, with vagrant and docker image downloads. 
-
-After the first time it is very quick.
+This branch leverages a pre-built box image which include:
+  * OVS+NSH
+  * docker and images
+  * required utilities.
 
 1. Set up Vagrant. 
   * Edit env.sh for NUM_NODES. (Keep all other vars the same for this version)
@@ -17,7 +16,7 @@ After the first time it is very quick.
 source ./env.sh
 vagrant up
 ```
-  * This takes quite some time initially. 
+  * This will leverage a pre-built box file.
 
 3. Start controller.
   * Currently it is expected that that controller runs on the host hosting the VMs.
