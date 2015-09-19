@@ -18,6 +18,13 @@ vagrant up
 ```
   * This will leverage a pre-built box file.
 
+```
+./cleandemo.sh
+```
+
+  * The above will generate errors but please ignore. The pre-built box file
+    means that each OVSDB instance has the same UUID and the above resets it.
+
 3. Start controller.
   * Currently it is expected that that controller runs on the host hosting the VMs.
   * Tested using groupbasedpolicy stable/lithium.

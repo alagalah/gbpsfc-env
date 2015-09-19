@@ -78,11 +78,13 @@ def get_tenant_data():
                                 "classifier-ref": [
                                     {
                                         "direction": "in", 
-                                        "name": "http-dest"
+                                        "name": "http-dest",
+					"instance-name" : "http-dest",
                                     }, 
                                     {
                                         "direction": "out", 
-                                        "name": "http-src"
+                                        "name": "http-src",
+					"instance-name" : "http-src"
                                     }
                                 ],
                                                     "action-ref": [
@@ -102,7 +104,8 @@ def get_tenant_data():
                             {
                                 "classifier-ref": [
                                     {
-                                        "name": "icmp"
+                                        "name": "icmp",
+					"instance-name" : "icmp"
                                     }
                                 ], 
                                                     "action-ref": [

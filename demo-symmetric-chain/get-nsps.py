@@ -21,7 +21,7 @@ def get(host, port, uri):
 
 
 def get_rsps_uri():
-	return "/restconf/operational/rendered-service-path:rendered-service-paths"
+    return "/restconf/operational/rendered-service-path:rendered-service-paths"
 
 def doCmd(cmd):
     listcmd=cmd.split()
@@ -39,22 +39,23 @@ if __name__ == "__main__":
 	#print "Contacting controller at %s" % controller
 
     resp=get(controller,DEFAULT_PORT,get_rsps_uri())
+    if 'rendered-service-paths' not in resp:
+        sys.exit("No Rendered Service Paths found. Check ODL Log.")
+
     if len(resp['rendered-service-paths']) > 0:
-       paths=resp['rendered-service-paths']['rendered-service-path']
-
-       nsps=[]
-       for path in paths:
-           nsps.append(path['path-id'])
-       if len(nsps) > 0:
-           sw_index=int(socket.gethostname().split("gbpsfc",1)[1])-1
-           if sw_index in range(0,len(switches)+1):
-
-              controller=os.environ.get('ODL')
-              sw_type = switches[sw_index]['type']
-              sw_name = switches[sw_index]['name']
-              if sw_type == 'sf':
-                  print "******************************"
-                  print "Adding flows for %s as an SF." % sw_name
-                  print "******************************"
-                  doCmd('sudo /vagrant/utils/sf-flows.sh %s' % min(nsps))
+        paths=resp['rendered-service-paths']['rendered-service-path']
+        nsps=[]
+        for path in paths:
+            nsps.append(path['path-id'])
+        if len(nsps) > 0:
+            sw_index=int(socket.gethostname().split("gbpsfc",1)[1])-1
+            if sw_index in range(0,len(switches)+1):
+                controller=os.environ.get('ODL')
+                sw_type = switches[sw_index]['type']
+                sw_name = switches[sw_index]['name']
+                if sw_type == 'sf':
+                    print "******************************"
+                    print "Adding flows for %s as an SF." % sw_name
+                    print "******************************"
+                    doCmd('sudo /vagrant/utils/sf-flows.sh %s' % min(nsps))
 

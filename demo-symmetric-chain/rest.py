@@ -369,7 +369,8 @@ def get_tenant_data():
                     "order" : 0,
                     "classifier-ref": [
                       {
-                        "name": "icmp"
+                        "name": "icmp",
+			"instance-name" : "icmp"
                       }
                     ],
                     "action-ref": [
@@ -389,7 +390,8 @@ def get_tenant_data():
                     "name": "http-chain-rule-in",
                     "classifier-ref": [
                       {
-                        "name": "http-dest",
+                        "name" : "http-dest",
+			"instance-name": "http-dest",
                         "direction": "in"
                       }
                     ],
@@ -404,7 +406,8 @@ def get_tenant_data():
                     "name": "http-chain-rule-out",
                     "classifier-ref": [
                       {
-                        "name": "http-src",
+                        "name" : "http-src",
+  			"instance-name": "http-src",
                         "direction": "out"
                       }
                     ],
