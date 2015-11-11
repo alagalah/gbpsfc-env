@@ -232,7 +232,7 @@ def get_service_function_paths_data():
 
 def get_tenant_data():
     return {
-    "policy:tenant": [
+    "tenant": [
       {
         "id": "f5c7d344-d1c7-4208-8531-2c2693657e12",
         "l2-flood-domain": [
@@ -453,9 +453,8 @@ def get_tenant_data():
 def get_tenant_uri():
     return "/restconf/config/policy:tenants/policy:tenant/f5c7d344-d1c7-4208-8531-2c2693657e12"
 
-def get_tunnel_data():
+def get_tunnel_data_1():
     return {
-  "opendaylight-inventory:nodes": {
     "node": [
       {
         "id": "openflow:1",
@@ -473,7 +472,16 @@ def get_tunnel_data():
             "port": 4789
           }
         ]
-      },
+      }
+    ]
+  }
+
+def get_tunnel_uri_1():
+    return "/restconf/config/opendaylight-inventory:nodes/node/openflow:1"
+
+def get_tunnel_data_6():
+    return {
+    "node": [
       {
         "id": "openflow:6",
         "ofoverlay:tunnel": [
@@ -492,11 +500,10 @@ def get_tunnel_data():
         ]
       }
     ]
-  }
 }
 
-def get_tunnel_uri():
-    return "/restconf/config/opendaylight-inventory:nodes"
+def get_tunnel_uri_6():
+    return "/restconf/config/opendaylight-inventory:nodes/node/openflow:6"
 
 def get_endpoint_data():
     return [
@@ -680,7 +687,9 @@ if __name__ == "__main__":
     print "sending service function paths"
     put(controller, DEFAULT_PORT, get_service_function_paths_uri(), get_service_function_paths_data(), True)
     print "sending tunnel"
-    put(controller, DEFAULT_PORT, get_tunnel_uri(), get_tunnel_data(), True)
+    put(controller, DEFAULT_PORT, get_tunnel_uri_1(), get_tunnel_data_1(), True)
+    print "sending tenant"
+    put(controller, DEFAULT_PORT, get_tunnel_uri_6(), get_tunnel_data_6(), True)
     print "sending tenant"
     put(controller, DEFAULT_PORT, get_tenant_uri(), get_tenant_data(),True)
     print "registering endpoints"
