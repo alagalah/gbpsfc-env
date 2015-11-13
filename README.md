@@ -24,6 +24,10 @@ vagrant up
 3. Start controller.
   * Currently it is expected that that controller runs on the host hosting the VMs.
   * Tested using groupbasedpolicy stable/lithium.
+		If you are building stable/lithium and you get 'illegal unicode escape' error, 
+		you have to rename two yang files in 'groupbasedpolicy\ui-backend\src\main\yang'. 
+		These files have to start with a character other than 'u'. 
+		E.g. rename 'ui-backend.yang' to 'aui-backend.yang' and 'ui-backend-impl.yang' to 'aui-backend-impl.yang'.
   * Start controller by running bin/karaf and install following features in karaf:
 
 ```
@@ -151,8 +155,6 @@ Containers:
 To run, from host folder where Vagrantfile located do:
 
 ` ./startdemo.sh demo-symmetric-chain` | `demo-asymmetric-chain`
-
-For now, go through each POSTMAN entry in the folder for the demo. This will be ported.
 
 ### To test by sending traffic:
 Start a test HTTP server on h36_4 in VM 6.
