@@ -20,10 +20,8 @@ CONF_TENANT='/restconf/config/policy:tenants'
 
 def get(host, port, uri):
     url='http://'+host+":"+port+uri
-    #print url
     r = requests.get(url, auth=HTTPBasicAuth(USERNAME, PASSWORD))
-    jsondata=json.loads(r.text)
-    return jsondata
+    return r
 
 def put(host, port, uri, data, debug=False):
     '''Perform a PUT rest operation, using the URL and data provided'''
@@ -53,6 +51,19 @@ def post(host, port, uri, data, debug=False):
     if debug == True:
         print r.text
     r.raise_for_status()
+
+def wait_for_sff_in_datastore(url):
+    for i in xrange(30):
+        resp=get(controller, DEFAULT_PORT, url)
+        if ('192.168.50.71' in resp.text) and ('192.168.50.73' in resp.text):
+            break
+        time.sleep(3)
+    if ('192.168.50.71' not in resp.text):
+        print "ERROR: SFF1 has not been initialized!"
+        sys.exit(1)
+    if ('192.168.50.73' not in resp.text):
+        print "ERROR: SFF2 has not been initialized!"
+        sys.exit(1)
 
 
 
@@ -230,7 +241,7 @@ def get_service_function_paths_data():
 
 def get_tenant_data():
     return {
-    "policy:tenant": [
+    "tenant": [
       {
         "id": "f5c7d344-d1c7-4208-8531-2c2693657e12",
         "l2-flood-domain": [
@@ -451,9 +462,8 @@ def get_tenant_data():
 def get_tenant_uri():
     return "/restconf/config/policy:tenants/policy:tenant/f5c7d344-d1c7-4208-8531-2c2693657e12"
 
-def get_tunnel_data():
+def get_tunnel_data_1():
     return {
-  "opendaylight-inventory:nodes": {
     "node": [
       {
         "id": "openflow:1",
@@ -471,7 +481,16 @@ def get_tunnel_data():
             "port": 4789
           }
         ]
-      },
+      }
+    ]
+  }
+
+def get_tunnel_uri_1():
+    return "/restconf/config/opendaylight-inventory:nodes/node/openflow:1"
+
+def get_tunnel_data_6():
+    return {
+    "node": [
       {
         "id": "openflow:6",
         "ofoverlay:tunnel": [
@@ -490,11 +509,10 @@ def get_tunnel_data():
         ]
       }
     ]
-  }
 }
 
-def get_tunnel_uri():
-    return "/restconf/config/opendaylight-inventory:nodes"
+def get_tunnel_uri_6():
+    return "/restconf/config/opendaylight-inventory:nodes/node/openflow:6"
 
 def get_endpoint_data():
     return [
@@ -658,6 +676,12 @@ def get_endpoint_data():
 def get_endpoint_uri():
     return "/restconf/operations/endpoint:register-endpoint"
 
+def get_tunnel_oper_uri():
+    return "/restconf/operational/opendaylight-inventory:nodes/"
+
+def get_topology_oper_uri():
+    return "/restconf/operational/network-topology:network-topology/topology/ovsdb:1/"
+
 if __name__ == "__main__":
     # Launch main menu
 
@@ -669,16 +693,22 @@ if __name__ == "__main__":
 
     tenants=get(controller,DEFAULT_PORT,CONF_TENANT)
 
+    print "waiting for manager on SFFs..."
+    wait_for_sff_in_datastore(get_topology_oper_uri())
     print "sending service functions"
     put(controller, DEFAULT_PORT, get_service_functions_uri(), get_service_functions_data(), True)
     print "sending service function forwarders"
     put(controller, DEFAULT_PORT, get_service_function_forwarders_uri(), get_service_function_forwarders_data(), True)
+    print "waiting for switches on SFFs..."
+    wait_for_sff_in_datastore(get_tunnel_oper_uri())
     print "sending service function chains"
     put(controller, DEFAULT_PORT, get_service_function_chains_uri(), get_service_function_chains_data(), True)
     print "sending service function paths"
     put(controller, DEFAULT_PORT, get_service_function_paths_uri(), get_service_function_paths_data(), True)
     print "sending tunnel"
-    put(controller, DEFAULT_PORT, get_tunnel_uri(), get_tunnel_data(), True)
+    put(controller, DEFAULT_PORT, get_tunnel_uri_1(), get_tunnel_data_1(), True)
+    print "sending tenant"
+    put(controller, DEFAULT_PORT, get_tunnel_uri_6(), get_tunnel_data_6(), True)
     print "sending tenant"
     put(controller, DEFAULT_PORT, get_tenant_uri(), get_tenant_data(),True)
     print "registering endpoints"

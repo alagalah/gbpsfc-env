@@ -20,10 +20,8 @@ CONF_TENANT='/restconf/config/policy:tenants'
 
 def get(host, port, uri):
     url='http://'+host+":"+port+uri
-    #print url
     r = requests.get(url, auth=HTTPBasicAuth(USERNAME, PASSWORD))
-    jsondata=json.loads(r.text)
-    return jsondata
+    return r
 
 def rest_delete(host, port, uri, debug=False):
     '''Perform a DELETE rest operation, using the URL and data provided'''
@@ -71,6 +69,9 @@ def get_tunnel_uri():
 def get_endpoint_uri():
     return "/restconf/operations/endpoint:unregister-endpoint"
 
+def get_topology_uri():
+    return "/restconf/config/network-topology:network-topology/topology/ovsdb:1"
+
 if __name__ == "__main__":
     # Launch main menu
 
@@ -83,8 +84,9 @@ if __name__ == "__main__":
 	print "Contacting controller at %s" % controller
 
     resp=get(controller,DEFAULT_PORT,'/restconf/operational/endpoint:endpoints')
-    l2_eps=resp['endpoints']['endpoint']
-    l3_eps=resp['endpoints']['endpoint-l3']
+    resp_json=json.loads(resp.text)
+    l2_eps=resp_json['endpoints']['endpoint']
+    l3_eps=resp_json['endpoints']['endpoint-l3']
 
     print "deleting service function paths"
     rest_delete(controller, DEFAULT_PORT, get_service_function_paths_uri(), True)
@@ -113,3 +115,10 @@ if __name__ == "__main__":
     for endpoint in l3_eps:
 	data={ "input": { "l3": [ { "l3-context": endpoint['l3-context'] ,"ip-address": endpoint['ip-address'] } ] } }
         post(controller, DEFAULT_PORT, get_endpoint_uri(),data,True)
+
+    print "topology removed check"
+    resp=get(controller, DEFAULT_PORT, get_topology_uri())
+    topology_json=json.loads(resp.text)
+    if resp.status_code == requests.codes.ok:
+        print "WARNING: Topology %s has not been removed! Removing now..." % get_topology_uri()
+        rest_delete(controller, DEFAULT_PORT, get_topology_uri(), True)
