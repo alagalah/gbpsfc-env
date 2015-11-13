@@ -20,10 +20,8 @@ CONF_TENANT='/restconf/config/policy:tenants'
 
 def get(host, port, uri):
     url='http://'+host+":"+port+uri
-    #print url
     r = requests.get(url, auth=HTTPBasicAuth(USERNAME, PASSWORD))
-    jsondata=json.loads(r.text)
-    return jsondata
+    return r
 
 def put(host, port, uri, data, debug=False):
     '''Perform a PUT rest operation, using the URL and data provided'''
@@ -53,6 +51,19 @@ def post(host, port, uri, data, debug=False):
     if debug == True:
         print r.text
     r.raise_for_status()
+
+def wait_for_sff_in_datastore(url):
+    for i in xrange(30):
+        resp=get(controller, DEFAULT_PORT, url)
+        if ('192.168.50.71' in resp.text) and ('192.168.50.73' in resp.text):
+            break
+        time.sleep(3)
+    if ('192.168.50.71' not in resp.text):
+        print "ERROR: SFF1 has not been initialized!"
+        sys.exit(1)
+    if ('192.168.50.73' not in resp.text):
+        print "ERROR: SFF2 has not been initialized!"
+        sys.exit(1)
 
 
 
@@ -667,6 +678,12 @@ def get_endpoint_data():
 def get_endpoint_uri():
     return "/restconf/operations/endpoint:register-endpoint"
 
+def get_tunnel_oper_uri():
+    return "/restconf/operational/opendaylight-inventory:nodes/"
+
+def get_topology_oper_uri():
+    return "/restconf/operational/network-topology:network-topology/topology/ovsdb:1/"
+
 if __name__ == "__main__":
     # Launch main menu
 
@@ -678,10 +695,14 @@ if __name__ == "__main__":
 
     tenants=get(controller,DEFAULT_PORT,CONF_TENANT)
 
+    print "waiting for manager on SFFs..."
+    wait_for_sff_in_datastore(get_topology_oper_uri())
     print "sending service functions"
     put(controller, DEFAULT_PORT, get_service_functions_uri(), get_service_functions_data(), True)
     print "sending service function forwarders"
     put(controller, DEFAULT_PORT, get_service_function_forwarders_uri(), get_service_function_forwarders_data(), True)
+    print "waiting for switches on SFFs..."
+    wait_for_sff_in_datastore(get_tunnel_oper_uri())
     print "sending service function chains"
     put(controller, DEFAULT_PORT, get_service_function_chains_uri(), get_service_function_chains_data(), True)
     print "sending service function paths"
