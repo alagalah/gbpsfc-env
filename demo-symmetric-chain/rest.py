@@ -59,10 +59,10 @@ def wait_for_sff_in_datastore(url):
             break
         time.sleep(3)
     if ('192.168.50.71' not in resp.text):
-        print "ERROR: SFF1 not initialized!"
+        print "ERROR: SFF1 has not been initialized!"
         sys.exit(1)
     if ('192.168.50.73' not in resp.text):
-        print "ERROR: SFF2 not initialized!"
+        print "ERROR: SFF2 has not been initialized!"
         sys.exit(1)
 
 
@@ -694,7 +694,7 @@ if __name__ == "__main__":
     put(controller, DEFAULT_PORT, get_service_functions_uri(), get_service_functions_data(), True)
     print "sending service function forwarders"
     put(controller, DEFAULT_PORT, get_service_function_forwarders_uri(), get_service_function_forwarders_data(), True)
-    print "Waiting for switches on SFFs..."
+    print "waiting for switches on SFFs..."
     wait_for_sff_in_datastore(get_tunnel_oper_uri())
     print "sending service function chains"
     put(controller, DEFAULT_PORT, get_service_function_chains_uri(), get_service_function_chains_data(), True)
