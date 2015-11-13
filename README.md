@@ -17,7 +17,9 @@ After the first time it is very quick.
 source ./env.sh
 vagrant up
 ```
-  * This takes quite some time initially. 
+  * This takes quite some time initially.
+  * If the starting process fail with '/sbin/mount.vboxsf: mounting failed with the error: No such device' line
+    (usually occur after first halt) run 'vagrant plugin install vagrant-vbguest' command on host. It should solve the problem.
 
 3. Start controller.
   * Currently it is expected that that controller runs on the host hosting the VMs.
