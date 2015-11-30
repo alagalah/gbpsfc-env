@@ -7,7 +7,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "512"
   end
-
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
   # run our bootstrapping for the system
   config.vm.provision 'shell', path: 'bootstrap.sh', :args => odl
 

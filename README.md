@@ -200,4 +200,15 @@ If you like `vagrant destroy` will remove all VMs
 4. Restart the controller, install features, wait, as above.
 
 
+# Useful vagrant plugins
+
+You can install plugins using
+
+```bash
+vagrant plugin install <plugin>
+```
+
+Useful ones are:
+vagrant-cachier - faster build times as APT repos cached
+vagrant-vbguest - updates VirtualBox Guest Additions versions (if possible)
 
