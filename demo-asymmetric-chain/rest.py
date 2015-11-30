@@ -690,11 +690,8 @@ if __name__ == "__main__":
     controller=os.environ.get('ODL')
     if controller == None:
         sys.exit("No controller set.")
-    else:
-	print "Contacting controller at %s" % controller
 
-    tenants=get(controller,DEFAULT_PORT,CONF_TENANT)
-
+    print "Contacting controller at %s" % controller
     print "waiting for manager on SFFs..."
     wait_for_sff_in_datastore(get_topology_oper_uri())
     print "sending service functions"
