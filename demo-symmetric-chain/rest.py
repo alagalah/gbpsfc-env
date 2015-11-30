@@ -127,8 +127,9 @@ def get_service_function_forwarders_data():
                         "name": "firewall-72",
                         "type": "service-function-type:firewall",
                         "sff-sf-data-plane-locator": {
-                            "sf-dpl-name": "2",
-			    "sff-dpl-name": "sfc-tun2"
+                            "port": 6633,
+                            "ip": "192.168.50.71",
+                             "transport": "service-locator:vxlan-gpe"
                         }
                     }
                 ],
@@ -165,8 +166,9 @@ def get_service_function_forwarders_data():
                         "name": "dpi-74",
                         "type": "service-function-type:dpi",
                         "sff-sf-data-plane-locator": {
-			    "sf-dpl-name": "3",
-                            "sff-dpl-name": "sfc-tun4"
+                            "port": 6633,
+                            "ip": "192.168.50.73",
+                             "transport": "service-locator:vxlan-gpe"
                         }
                     }
                 ],
