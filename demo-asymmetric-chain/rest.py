@@ -310,7 +310,7 @@ def get_tenant_data():
           "classifier-instance": [
             {
               "name": "icmp",
-              "classifier-definition-id": "79c6fdb2-1e1a-4832-af57-c65baf5c2335",
+              "classifier-definition-id": "Classifier-IP-Protocol",
               "parameter-value": [
                 {
                   "name": "proto",
@@ -320,7 +320,7 @@ def get_tenant_data():
             },
             {
               "name": "http-dest",
-              "classifier-definition-id": "4250ab32-e8b8-445a-aebb-e1bd2cdd291f",
+              "classifier-definition-id": "Classifier-L4",
               "parameter-value": [
                 {
                   "int-value": "6",
@@ -334,7 +334,7 @@ def get_tenant_data():
             },
             {
               "name": "http-src",
-              "classifier-definition-id": "4250ab32-e8b8-445a-aebb-e1bd2cdd291f",
+              "classifier-definition-id": "Classifier-L4",
               "parameter-value": [
                 {
                   "int-value": "6",
@@ -350,7 +350,7 @@ def get_tenant_data():
           "action-instance": [
             {
               "name": "chain1",
-              "action-definition-id": "3d886be7-059f-4c4f-bbef-0356bea40933",
+              "action-definition-id": "Action-Chain",
               "parameter-value": [
                 {
                   "name": "sfc-chain-name",
@@ -360,7 +360,7 @@ def get_tenant_data():
             },
             {
               "name": "allow1",
-              "action-definition-id": "f942e8fd-e957-42b7-bd18-f73d11266d17"
+              "action-definition-id": "Action-Allow"
             }
           ]
         },
@@ -688,11 +688,8 @@ if __name__ == "__main__":
     controller=os.environ.get('ODL')
     if controller == None:
         sys.exit("No controller set.")
-    else:
-	print "Contacting controller at %s" % controller
 
-    tenants=get(controller,DEFAULT_PORT,CONF_TENANT)
-
+    print "Contacting controller at %s" % controller
     print "waiting for manager on SFFs..."
     wait_for_sff_in_datastore(get_topology_oper_uri())
     print "sending service functions"

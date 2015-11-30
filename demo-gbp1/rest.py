@@ -176,7 +176,7 @@ def get_tenant_data():
         "subject-feature-instances": {
             "classifier-instance": [
                 {
-                    "classifier-definition-id": "4250ab32-e8b8-445a-aebb-e1bd2cdd291f", 
+                    "classifier-definition-id": "Classifier-L4",
                     "name": "http-dest", 
                     "parameter-value": [
                         {
@@ -190,7 +190,7 @@ def get_tenant_data():
                     ]
                 }, 
                 {
-                    "classifier-definition-id": "4250ab32-e8b8-445a-aebb-e1bd2cdd291f", 
+                    "classifier-definition-id": "Classifier-L4",
                     "name": "http-src", 
                     "parameter-value": [
                         {
@@ -204,7 +204,7 @@ def get_tenant_data():
                     ]
                 }, 
                 {
-                    "classifier-definition-id": "79c6fdb2-1e1a-4832-af57-c65baf5c2335", 
+                    "classifier-definition-id": "Classifier-IP-Protocol",
                     "name": "icmp", 
                     "parameter-value": [
                         {
@@ -217,7 +217,7 @@ def get_tenant_data():
           "action-instance": [
             {
               "name": "allow1",
-              "action-definition-id": "f942e8fd-e957-42b7-bd18-f73d11266d17"
+              "action-definition-id": "Action-Allow"
             }
           ]
         }, 
