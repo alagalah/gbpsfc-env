@@ -239,66 +239,64 @@ def get_tenant_data():
     return {
     "tenant": [
       {
-        "id": "f5c7d344-d1c7-4208-8531-2c2693657e12",
+        "id": "tenant-dobre",
         "l2-flood-domain": [
           {
-            "id": "393b4a3f-431e-476f-9674-832fb9f5fab9",
-            "parent": "7b796915-adf4-4356-b5ca-de005ac410c1"
+            "id": "flood-domain-1",
+            "parent": "bridge-domain1"
           },
           {
-            "id": "4ae1198e-0380-427f-8386-28281672eca3",
-            "parent": "7b796915-adf4-4356-b5ca-de005ac410c1"
+            "id": "flood-domain-2",
+            "parent": "bridge-domain1"
           }
         ],
         "name": "DockerTenant",
         "l3-context": [
           {
-            "id": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "id": "l3-context-vrf-red"
           }
         ],
         "l2-bridge-domain": [
           {
-            "id": "7b796915-adf4-4356-b5ca-de005ac410c1",
-            "parent": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "id": "bridge-domain1",
+            "parent": "l3-context-vrf-red"
           }
         ],
         "subnet": [
           {
-            "id": "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+            "id": "subnet-10.0.36.0/24",
             "virtual-router-ip": "10.0.36.1",
-            "parent": "4ae1198e-0380-427f-8386-28281672eca3",
+            "parent": "flood-domain-2",
             "ip-prefix": "10.0.36.1/24"
           },
           {
-            "id": "7f43a456-2c99-497b-9ecf-7169be0163b9",
+            "id": "subnet-10.0.35.0/24",
             "virtual-router-ip": "10.0.35.1",
-            "parent": "393b4a3f-431e-476f-9674-832fb9f5fab9",
+            "parent": "flood-domain-1",
             "ip-prefix": "10.0.35.1/24"
           }
         ],
         "endpoint-group": [
           {
-            "id": "e593f05d-96be-47ad-acd5-ba81465680d5",
-            "network-domain": "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+            "id": "webservers",
             "name" : "webservers",
             "provider-named-selector": [
               {
-                "name": "e593f05d-96be-47ad-acd5-ba81465680d5-1eaf9a67-a171-42a8-9282-71cf702f61dd-22282cca-9a13-4d0c-a67e-a933ebb0b0ae",
+                "name": "webservers-clients-icmp-http-contract",
                 "contract": [
-                  "22282cca-9a13-4d0c-a67e-a933ebb0b0ae"
+                  "icmp-http-contract"
                 ]
               }
             ]
           },
           {
-            "id": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
+            "id": "clients",
             "name" : "clients",
-            "network-domain": "7f43a456-2c99-497b-9ecf-7169be0163b9",
             "consumer-named-selector": [
               {
-                "name": "e593f05d-96be-47ad-acd5-ba81465680d5-1eaf9a67-a171-42a8-9282-71cf702f61dd-22282cca-9a13-4d0c-a67e-a933ebb0b0ae",
+                "name": "webservers-clients-icmp-http-contract",
                 "contract": [
-                  "22282cca-9a13-4d0c-a67e-a933ebb0b0ae"
+                  "icmp-http-contract"
                 ]
               }
             ]
@@ -364,7 +362,7 @@ def get_tenant_data():
         },
         "contract": [
           {
-            "id": "22282cca-9a13-4d0c-a67e-a933ebb0b0ae",
+            "id": "icmp-http-contract",
             "subject": [
               {
                 "name": "icmp-subject",
@@ -455,7 +453,7 @@ def get_tenant_data():
 # Main Program
 
 def get_tenant_uri():
-    return "/restconf/config/policy:tenants/policy:tenant/f5c7d344-d1c7-4208-8531-2c2693657e12"
+    return "/restconf/config/policy:tenants/policy:tenant/tenant-dobre"
 
 def get_tunnel_data_1():
     return {
@@ -514,157 +512,157 @@ def get_endpoint_data():
 {
 "input": {
 
-    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
+    "endpoint-group": "webservers",
 
-    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+    "network-containment" : "subnet-10.0.36.0/24",
 
-    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "l2-context": "bridge-domain1",
     "mac-address": "00:00:00:00:36:02",
 
     "l3-address": [
         {
             "ip-address": "10.0.36.2",
-            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "l3-context": "l3-context-vrf-red"
         }
     ],
     "port-name": "vethl-h36_2",
-    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+    "tenant": "tenant-dobre"
 }
 },
 {
 "input": {
-    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
-"network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
-"l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "endpoint-group": "clients",
+"network-containment" : "subnet-10.0.35.0/24",
+"l2-context": "bridge-domain1",
 "mac-address": "00:00:00:00:35:02",
 "l3-address": [
     {
         "ip-address": "10.0.35.2",
-        "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+        "l3-context": "l3-context-vrf-red"
     }
 ],
 "port-name": "vethl-h35_2",
-"tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+"tenant": "tenant-dobre"
 }
 },
 {
 "input": {
 
-    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
+    "endpoint-group": "clients",
 
-    "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+    "network-containment" : "subnet-10.0.35.0/24",
 
-    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "l2-context": "bridge-domain1",
     "mac-address": "00:00:00:00:35:03",
 
     "l3-address": [
         {
             "ip-address": "10.0.35.3",
-            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "l3-context": "l3-context-vrf-red"
         }
     ],
     "port-name": "vethl-h35_3",
-    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+    "tenant": "tenant-dobre"
 }
 },
 {
 "input": {
 
-    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
+    "endpoint-group": "webservers",
 
-    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+    "network-containment" : "subnet-10.0.36.0/24",
 
-    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "l2-context": "bridge-domain1",
     "mac-address": "00:00:00:00:36:03",
 
     "l3-address": [
         {
             "ip-address": "10.0.36.3",
-            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "l3-context": "l3-context-vrf-red"
         }
     ],
     "port-name": "vethl-h36_3",
-    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+    "tenant": "tenant-dobre"
 }
 },
 {
 "input": {
 
-    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
+    "endpoint-group": "webservers",
 
-    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+    "network-containment" : "subnet-10.0.36.0/24",
 
-    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "l2-context": "bridge-domain1",
     "mac-address": "00:00:00:00:36:04",
 
     "l3-address": [
         {
             "ip-address": "10.0.36.4",
-            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "l3-context": "l3-context-vrf-red"
         }
     ],
     "port-name": "vethl-h36_4",
-    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+    "tenant": "tenant-dobre"
 }
 },
 {
 "input": {
 
-    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
+    "endpoint-group": "clients",
 
-    "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+    "network-containment" : "subnet-10.0.35.0/24",
 
-    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "l2-context": "bridge-domain1",
     "mac-address": "00:00:00:00:35:04",
 
     "l3-address": [
         {
             "ip-address": "10.0.35.4",
-            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "l3-context": "l3-context-vrf-red"
         }
     ],
     "port-name": "vethl-h35_4",
-    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+    "tenant": "tenant-dobre"
 }
 },
 {
 "input": {
 
-    "endpoint-group": "1eaf9a67-a171-42a8-9282-71cf702f61dd",
+    "endpoint-group": "clients",
 
-    "network-containment" : "7f43a456-2c99-497b-9ecf-7169be0163b9",
+    "network-containment" : "subnet-10.0.35.0/24",
 
-    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "l2-context": "bridge-domain1",
     "mac-address": "00:00:00:00:35:05",
 
     "l3-address": [
         {
             "ip-address": "10.0.35.5",
-            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "l3-context": "l3-context-vrf-red"
         }
     ],
     "port-name": "vethl-h35_5",
-    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+    "tenant": "tenant-dobre"
 }
 },
 {
 "input": {
 
-    "endpoint-group": "e593f05d-96be-47ad-acd5-ba81465680d5",
+    "endpoint-group": "webservers",
 
-    "network-containment" : "49850b5a-684d-4cc0-aafe-95d25c9a4b97",
+    "network-containment" : "subnet-10.0.36.0/24",
 
-    "l2-context": "7b796915-adf4-4356-b5ca-de005ac410c1",
+    "l2-context": "bridge-domain1",
     "mac-address": "00:00:00:00:36:05",
 
     "l3-address": [
         {
             "ip-address": "10.0.36.5",
-            "l3-context": "cbe0cc07-b8ff-451d-8171-9eef002a8e80"
+            "l3-context": "l3-context-vrf-red"
         }
     ],
     "port-name": "vethl-h36_5",
-    "tenant": "f5c7d344-d1c7-4208-8531-2c2693657e12"
+    "tenant": "tenant-dobre"
 }
 }]
 
