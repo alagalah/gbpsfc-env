@@ -1,2 +1,8 @@
 .vagrant
 *.pyc
+.vagrant
+*.pyc
+get-nsps.py
+infrastructure_config.py
+demo.lock
+
