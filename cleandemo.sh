@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
 
 for i in `seq 1 $NUM_NODES`; do
   hostname="gbpsfc"$i
